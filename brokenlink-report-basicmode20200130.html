@@ -1,0 +1,1427 @@
+<head>
+<meta charset="utf-8"></meta>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+<title>Free Broken Link Checker - checks your website for bad links / dead links online</title>
+<meta name="description" content="Free Broken Link Checker - checks your website for bad links / dead hyperlinks online"></meta>
+<meta name="keywords" content="Broken link checker, online checker, free check, broken links, bad lihyperlink, dead links, link validator, find broken, detect links, 404 error, page not found, link rot, http reponse, scan, online scanner"></meta>
+<meta name="viewport" content="initial-scale=1"></meta>
+<link href="styles.css" rel="stylesheet" type="text/css">
+<style>
+  #brokenLinkTable_td input{
+    width: 100%;
+  }
+  #brokenLinkTable_td textarea{
+    resize: none;
+    width: 100%;
+    vertical-align: middle;
+    height: auto;
+  }
+  body{
+    font-family: Arial;
+  }
+  table{
+    font-size: 13;
+  }
+  #statsButton{
+    background-color: : #e3e3e3;
+  }
+</style>
+<script type="text/javascript" src="lib/mootools-core.js"></script>
+<script type="text/javascript" src="lib/mootools-more.js"></script>
+<script type="text/javascript">
+
+var count = 1;
+var curr_visibility = 'visible';
+
+var scroll;
+window.addEvent('domready',function() {
+  scroll = new SmoothScroll({ duration:2700 }, window);
+});
+
+function explain()  
+{  
+window.open('https://www.brokenlinkcheck.com/broken-link-response-codes.php','','resizable=no,scrollbars=no,menubar=no,toolbar=no,location=no,status=no');
+//    mywindow.moveTo(0, 0);  
+} 
+
+var cleanSessPar = true;
+
+function clearSessPar(txt) {
+
+
+
+  if (cleanSessPar) {
+
+    txt.value='';
+
+    cleanSessPar = false;
+
+  }
+
+}
+
+function findNow() {
+  var form = document.getElementById("inputForm");
+  form.url_input.value = form.url_input.value.toLowerCase();
+  submitToGenerateWithRetries();
+} 
+
+function initThis() {
+  setInterval('blinkIt()',300);
+  document.getElementById("txt1").value = "";
+  document.getElementById("txt2").value = "";
+}
+
+function blinkIt() {
+ if (!document.all) return;
+ else {
+   count++;
+   if (count > 15) {
+     count = 1;
+   } else if (count < 6) {
+      if (count%2 == 0) {
+      curr_visibility = 'hidden';
+    } else {
+      curr_visibility = 'visible';
+    }
+     for(i=0;i<document.all.tags('blink').length;i++){
+      s=document.all.tags('blink')[i];
+      s.style.visibility=curr_visibility;
+     }
+    
+   }
+ }
+}
+
+function generateNewSecurityCodeHere() {
+  var gImg = document.getElementById("genim");
+  if (gImg.naturalHeight > 0) {
+    generateNewSecurityCode();
+  } else {
+    location.reload(); 
+  } 
+}
+</script>
+<script type="text/javascript" src="brokenLinksHelperCr.js?v=5.08"></script> 
+<style type="text/css">
+<!--
+#brokenLinkTable {
+  border: 1px solid #999999;
+}
+#brokenLinkTable_td {
+  border-top-width: 1px;
+  border-right-width: 1px;
+  border-bottom-width: 1px;
+  border-left-width: 1px;
+  border-top-color: #CCCCCC;
+  border-right-color: #CCCCCC;
+  border-bottom-color: #CCCCCC;
+  border-left-color: #CCCCCC;
+  border-right-style: solid;
+  border-top-style: solid;
+}
+#brokenLinkTable_td_right_end {
+  border-top-width: 1px;
+  border-right-width: 1px;
+  border-bottom-width: 1px;
+  border-left-width: 1px;
+  border-top-color: #CCCCCC;
+  border-right-color: #CCCCCC;
+  border-bottom-color: #CCCCCC;
+  border-left-color: #CCCCCC;
+  border-top-style: solid;
+}
+#brokenLinkTable_td_header {
+  border-top-width: 1px;
+  border-right-width: 1px;
+  border-bottom-width: 1px;
+  border-left-width: 1px;
+  border-top-color: #CCCCCC;
+  border-right-color: #CCCCCC;
+  border-bottom-color: #CCCCCC;
+  border-left-color: #CCCCCC;
+  border-right-style: solid;
+}
+.style1 {
+  font-size: 12px;
+  font-weight: bold;
+}
+.style2 {
+  color: #4A92C6;
+  font-weight: bold;
+}
+/*.style4 {color: #1E87B3}*/
+.style4 {color: #696969}
+.style6 {font-size: x-small}
+.style7 {color: #494949}
+.style8 {
+  color: #FF0000;
+  font-weight: bold;
+}
+
+.boxed {
+  border: dashed 1px;
+  width: 250px;
+  height: 65px;
+  
+}
+.style9 {font-size: 9px; color: #666666; }
+.style11 {font-size: 15px; color: #0190CB}
+-->
+</style>
+</head>
+<body id="contentbkg_top" onload="initThis()">
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+
+    <tbody>
+        
+
+        
+
+        
+        <tr>
+
+            <td colspan="2">
+                <div id="bl_table" style="visibility: visible; display: block;">
+
+                    <table width="100%" cellpadding="0" cellspacing="0"  id="brokenLinkTable">
+
+                        <tbody>
+                            <tr>
+
+                                <td id="brokenLinkTable_td_header" width="5%">
+                                    <div align="center"><strong>#</strong></div>
+                                </td>
+
+                                <td id="brokenLinkTable_td_header" width="40%">
+                                    <div align="center"><strong>Broken link </strong><span class="style6"> (you can scroll this field left-right)</span></div>
+                                </td>
+
+                                <td id="brokenLinkTable_td_header" width="10%">
+                                    <div align="center"><strong>Link Text</strong></div>
+                                </td>
+
+                                <td id="brokenLinkTable_td_header" width="40%">
+                                    <div align="center"><strong>Page where found</strong></div>
+                                </td>
+
+                                <td width="5%">
+                                    <div align="center">
+                                        <p class="style1">Server response</p>
+
+                                    </div>
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://chbank.com/onlineapplication/forms/anon/org/app/1b7fd46c-a5b9-42c5-80e1-7499b81974f7/launch/index.html?form=F_Enquiry&amp;nl=en&amp;formtype=PL" target="_blank" name="1">1</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://chbank.com/onlineapplication/forms/anon/org/app/1b7fd46c-a5b9-42c5-80e1-7499b81974f7/launch/index.html?form=F_Enquiry&amp;nl=en&amp;formtype=PL</span>
+                                        <div>http://chbank.com/onlineapplication/forms/anon/org/app/1b7fd46c-a5b9-42c5-80e1-7499b81974f7/launch/index.html?form=F_Enquiry&amp;nl=en&amp;formtype=PL</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>Apply Now</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/en/homepage.shtml" target="_blank">http://www.chbank.com/en/homepage.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#1" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://itunes.apple.com/hk/app/id483522652&amp;mt=8" target="_blank" name="2">2</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://itunes.apple.com/hk/app/id483522652&amp;mt=8</span>
+                                        <div>http://itunes.apple.com/hk/app/id483522652&amp;mt=8</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>App&amp;nbsp;Store</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/tc/personal/digital-services/mobile-apps/faq/index.shtml" target="_blank">http://www.chbank.com/tc/personal/digital-services/mobile-apps/faq/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#2" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.hkecic.com/eclink/home.html?lang=en" target="_blank" name="3">3</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.hkecic.com/eclink/home.html?lang=en</span>
+                                        <div>http://www.hkecic.com/eclink/home.html?lang=en</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>IMAGE</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/tc/commercial/banking-services/trade-finance/other-services/index.shtml" target="_blank">http://www.chbank.com/tc/commercial/banking-services/trade-finance/other-services/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#3" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/sc/personal/digital-services/online-application/index.shtml" target="_blank" name="4">4</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/sc/personal/digital-services/online-application/index.shtml</span>
+                                        <div>http://www.chbank.com/sc/personal/digital-services/online-application/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>网上申请及查询</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/sc/homepage.shtml" target="_blank">http://www.chbank.com/sc/homepage.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#4" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/personal/digital-services/index.shtml" target="_blank" name="5">5</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/personal/digital-services/index.shtml</span>
+                                        <div>http://www.chbank.com/personal/digital-services/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>數碼服務</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/tc/personal/footer/others/site-map/index.shtml" target="_blank">http://www.chbank.com/tc/personal/footer/others/site-map/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#5" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/personal/wealth-management/index.shtml" target="_blank" name="6">6</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/personal/wealth-management/index.shtml</span>
+                                        <div>http://www.chbank.com/personal/wealth-management/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>人壽保險</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/tc/personal/footer/others/site-map/index.shtml" target="_blank">http://www.chbank.com/tc/personal/footer/others/site-map/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#6" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/personal/digital-services/index.shtml" target="_blank" name="7">7</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/personal/digital-services/index.shtml</span>
+                                        <div>http://www.chbank.com/personal/digital-services/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>數碼服務</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/tc/personal/footer/others/site-map/index.shtml" target="_blank">http://www.chbank.com/tc/personal/footer/others/site-map/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#7" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/tc/personal/banking-services/card/merchant-acquiring-services/jetcop2m/index.shtml" target="_blank" name="8">8</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/tc/personal/banking-services/card/merchant-acquiring-services/jetcop2m/index.shtml</span>
+                                        <div>http://www.chbank.com/tc/personal/banking-services/card/merchant-acquiring-services/jetcop2m/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>創興 JETCO Pay 服務</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/tc/personal/footer/others/site-map/index.shtml" target="_blank">http://www.chbank.com/tc/personal/footer/others/site-map/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#8" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/tc/personal/banking-services/card/merchant-acquiring-services/jetcop2m/index.shtml" target="_blank" name="9">9</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/tc/personal/banking-services/card/merchant-acquiring-services/jetcop2m/index.shtml</span>
+                                        <div>http://www.chbank.com/tc/personal/banking-services/card/merchant-acquiring-services/jetcop2m/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>創興 JETCO Pay 服務</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/tc/personal/footer/others/site-map/index.shtml" target="_blank">http://www.chbank.com/tc/personal/footer/others/site-map/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#9" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/tc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml" target="_blank" name="10">10</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/tc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</span>
+                                        <div>http://www.chbank.com/tc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>「好啱使」全年商戶消費優惠</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/tc/personal/banking-services/card/credit-cards/personal-credit-cards/chong-hing-unionpay-dual-currency/index.shtml" target="_blank">http://www.chbank.com/tc/personal/banking-services/card/credit-cards/personal-credit-cards/chong-hing-unionpay-dual-currency/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#10" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/tc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml" target="_blank" name="11">11</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/tc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</span>
+                                        <div>http://www.chbank.com/tc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>「好啱使」全年商戶消費優惠</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/tc/personal/banking-services/card/credit-cards/personal-credit-cards/chong-hing-credit-card/chong-hing-unionpay-dual-currency/index.shtml" target="_blank">http://www.chbank.com/tc/personal/banking-services/card/credit-cards/personal-credit-cards/chong-hing-credit-card/chong-hing-unionpay-dual-currency/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#11" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/tc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml" target="_blank" name="12">12</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/tc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</span>
+                                        <div>http://www.chbank.com/tc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>「好啱使」全年商戶消費優惠</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/tc/personal/banking-services/card/credit-cards/personal-credit-cards/chong-hing-credit-card/chong-hing/index.shtml" target="_blank">http://www.chbank.com/tc/personal/banking-services/card/credit-cards/personal-credit-cards/chong-hing-credit-card/chong-hing/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#12" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/tc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml" target="_blank" name="13">13</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/tc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</span>
+                                        <div>http://www.chbank.com/tc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>「好啱使」全年商戶消費優惠</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/tc/personal/banking-services/card/credit-cards/personal-credit-cards/chong-hing-credit-card/chong-hing-platinum/index.shtml" target="_blank">http://www.chbank.com/tc/personal/banking-services/card/credit-cards/personal-credit-cards/chong-hing-credit-card/chong-hing-platinum/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#13" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/tc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml" target="_blank" name="14">14</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/tc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</span>
+                                        <div>http://www.chbank.com/tc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>「好啱使」全年商戶消費優惠</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/tc/personal/banking-services/card/credit-cards/personal-credit-cards/chong-hing-credit-card/man/index.shtml" target="_blank">http://www.chbank.com/tc/personal/banking-services/card/credit-cards/personal-credit-cards/chong-hing-credit-card/man/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#14" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/tc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml" target="_blank" name="15">15</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/tc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</span>
+                                        <div>http://www.chbank.com/tc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>「好啱使」全年商戶消費優惠</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/tc/personal/banking-services/card/credit-cards/personal-credit-cards/co-branded-credit-card/chicco/index.shtml" target="_blank">http://www.chbank.com/tc/personal/banking-services/card/credit-cards/personal-credit-cards/co-branded-credit-card/chicco/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#15" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/tc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml" target="_blank" name="16">16</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/tc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</span>
+                                        <div>http://www.chbank.com/tc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>「好啱使」全年商戶消費優惠</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/tc/personal/banking-services/card/credit-cards/personal-credit-cards/co-branded-credit-card/kingcomics/index.shtml" target="_blank">http://www.chbank.com/tc/personal/banking-services/card/credit-cards/personal-credit-cards/co-branded-credit-card/kingcomics/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#16" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/tc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml" target="_blank" name="17">17</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/tc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</span>
+                                        <div>http://www.chbank.com/tc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>「好啱使」全年商戶消費優惠</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/tc/personal/banking-services/card/credit-cards/personal-credit-cards/co-branded-credit-card/wah-yan-one-family/index.shtml" target="_blank">http://www.chbank.com/tc/personal/banking-services/card/credit-cards/personal-credit-cards/co-branded-credit-card/wah-yan-one-family/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#17" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/tc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml" target="_blank" name="18">18</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/tc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</span>
+                                        <div>http://www.chbank.com/tc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>「好啱使」全年商戶消費優惠</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/tc/personal/banking-services/card/credit-cards/personal-credit-cards/co-branded-credit-card/chiu-chow-chamber/index.shtml" target="_blank">http://www.chbank.com/tc/personal/banking-services/card/credit-cards/personal-credit-cards/co-branded-credit-card/chiu-chow-chamber/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#18" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/tc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml" target="_blank" name="19">19</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/tc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</span>
+                                        <div>http://www.chbank.com/tc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>「好啱使」全年商戶消費優惠</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/tc/personal/banking-services/card/credit-cards/personal-credit-cards/co-branded-credit-card/mss-alumnae-association/index.shtml" target="_blank">http://www.chbank.com/tc/personal/banking-services/card/credit-cards/personal-credit-cards/co-branded-credit-card/mss-alumnae-association/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#19" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/tc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml" target="_blank" name="20">20</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/tc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</span>
+                                        <div>http://www.chbank.com/tc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>「好啱使」全年商戶消費優惠</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/tc/personal/banking-services/card/credit-cards/personal-credit-cards/co-branded-credit-card/munsang-college-alumni-association/index.shtml" target="_blank">http://www.chbank.com/tc/personal/banking-services/card/credit-cards/personal-credit-cards/co-branded-credit-card/munsang-college-alumni-association/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#20" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/tc/personal/investment/investment-choices/investment-funds-services/index.shtml" target="_blank" name="21">21</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/tc/personal/investment/investment-choices/investment-funds-services/index.shtml</span>
+                                        <div>http://www.chbank.com/tc/personal/investment/investment-choices/investment-funds-services/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>基金投資服務</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/tc/personal/banking-services/loans/consumer-loan/tax-loan-calculator/index.shtml" target="_blank">http://www.chbank.com/tc/personal/banking-services/loans/consumer-loan/tax-loan-calculator/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#21" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/ibanking/theLink/tc/fund_wb.html" target="_blank" name="22">22</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/ibanking/theLink/tc/fund_wb.html</span>
+                                        <div>http://www.chbank.com/ibanking/theLink/tc/fund_wb.html</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>基金搜尋</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/tc/personal/banking-services/loans/consumer-loan/tax-loan-calculator/index.shtml" target="_blank">http://www.chbank.com/tc/personal/banking-services/loans/consumer-loan/tax-loan-calculator/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#22" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/tc/personal/investment/investment-choices/currency-linked-deposit/index.shtml" target="_blank" name="23">23</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/tc/personal/investment/investment-choices/currency-linked-deposit/index.shtml</span>
+                                        <div>http://www.chbank.com/tc/personal/investment/investment-choices/currency-linked-deposit/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>「自由息」外幣掛鈎存款</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/tc/personal/banking-services/loans/consumer-loan/tax-loan-calculator/index.shtml" target="_blank">http://www.chbank.com/tc/personal/banking-services/loans/consumer-loan/tax-loan-calculator/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#23" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/en/personal/banking-services/account-services/my-dream-hkd-savings/index.shtml" target="_blank" name="24">24</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/en/personal/banking-services/account-services/my-dream-hkd-savings/index.shtml</span>
+                                        <div>http://www.chbank.com/en/personal/banking-services/account-services/my-dream-hkd-savings/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>My Dream HKD Savings</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/en/personal/footer/others/site-map/index.shtml" target="_blank">http://www.chbank.com/en/personal/footer/others/site-map/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#24" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/en/personal/banking-services/card/merchant-acquiring-services/jetcop2m/index.shtml" target="_blank" name="25">25</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/en/personal/banking-services/card/merchant-acquiring-services/jetcop2m/index.shtml</span>
+                                        <div>http://www.chbank.com/en/personal/banking-services/card/merchant-acquiring-services/jetcop2m/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>JETCOPAY</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/en/personal/footer/others/site-map/index.shtml" target="_blank">http://www.chbank.com/en/personal/footer/others/site-map/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#25" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/en/personal/banking-services/card/merchant-acquiring-services/jetcop2m/index.shtml" target="_blank" name="26">26</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/en/personal/banking-services/card/merchant-acquiring-services/jetcop2m/index.shtml</span>
+                                        <div>http://www.chbank.com/en/personal/banking-services/card/merchant-acquiring-services/jetcop2m/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>JETCOPAY</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/en/personal/footer/others/site-map/index.shtml" target="_blank">http://www.chbank.com/en/personal/footer/others/site-map/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#26" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.hkecic.com/eclink/home.html?lang=en" target="_blank" name="27">27</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.hkecic.com/eclink/home.html?lang=en</span>
+                                        <div>http://www.hkecic.com/eclink/home.html?lang=en</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>IMAGE</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/sc/commercial/banking-services/trade-finance/other-services/index.shtml" target="_blank">http://www.chbank.com/sc/commercial/banking-services/trade-finance/other-services/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#27" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/sc/personal/banking-services/other-services/index.shtml" target="_blank" name="28">28</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/sc/personal/banking-services/other-services/index.shtml</span>
+                                        <div>http://www.chbank.com/sc/personal/banking-services/other-services/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>其他服务</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/sc/personal/banking-services/other-services/service-channels/index.shtml" target="_blank">http://www.chbank.com/sc/personal/banking-services/other-services/service-channels/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#28" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/sc/personal/banking-services/account-services/my-dream-hkd-savings/index.shtml" target="_blank" name="29">29</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/sc/personal/banking-services/account-services/my-dream-hkd-savings/index.shtml</span>
+                                        <div>http://www.chbank.com/sc/personal/banking-services/account-services/my-dream-hkd-savings/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>my dream 港元储蓄计划</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/sc/personal/footer/others/site-map/index.shtml" target="_blank">http://www.chbank.com/sc/personal/footer/others/site-map/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#29" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/sc/personal/banking-services/cards/credit-cards/personal-credit-cards/index/shtml" target="_blank" name="30">30</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/sc/personal/banking-services/cards/credit-cards/personal-credit-cards/index/shtml</span>
+                                        <div>http://www.chbank.com/sc/personal/banking-services/cards/credit-cards/personal-credit-cards/index/shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>个人信用卡</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/sc/personal/footer/others/site-map/index.shtml" target="_blank">http://www.chbank.com/sc/personal/footer/others/site-map/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#30" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/sc/personal/banking-services/card/merchant-acquiring-services/jetcop2m/index.shtml" target="_blank" name="31">31</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/sc/personal/banking-services/card/merchant-acquiring-services/jetcop2m/index.shtml</span>
+                                        <div>http://www.chbank.com/sc/personal/banking-services/card/merchant-acquiring-services/jetcop2m/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>创兴 JETCO Pay 服务</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/sc/personal/footer/others/site-map/index.shtml" target="_blank">http://www.chbank.com/sc/personal/footer/others/site-map/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#31" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/sc/personal/banking-services/card/merchant-acquiring-services/jetcop2m/index.shtml" target="_blank" name="32">32</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/sc/personal/banking-services/card/merchant-acquiring-services/jetcop2m/index.shtml</span>
+                                        <div>http://www.chbank.com/sc/personal/banking-services/card/merchant-acquiring-services/jetcop2m/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>创兴 JETCO Pay 服务</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/sc/personal/footer/others/site-map/index.shtml" target="_blank">http://www.chbank.com/sc/personal/footer/others/site-map/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#32" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/tc/personal/investment/investment-choices/investment-funds-services/index.shtml" target="_blank" name="33">33</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/tc/personal/investment/investment-choices/investment-funds-services/index.shtml</span>
+                                        <div>http://www.chbank.com/tc/personal/investment/investment-choices/investment-funds-services/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>基金投資服務</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/tc/personal/banking-services/loans/mortgage-loan/mortgage-loan-calculator/index.shtml" target="_blank">http://www.chbank.com/tc/personal/banking-services/loans/mortgage-loan/mortgage-loan-calculator/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#33" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/ibanking/theLink/tc/fund_wb.html" target="_blank" name="34">34</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/ibanking/theLink/tc/fund_wb.html</span>
+                                        <div>http://www.chbank.com/ibanking/theLink/tc/fund_wb.html</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>基金搜尋</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/tc/personal/banking-services/loans/mortgage-loan/mortgage-loan-calculator/index.shtml" target="_blank">http://www.chbank.com/tc/personal/banking-services/loans/mortgage-loan/mortgage-loan-calculator/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#34" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/tc/personal/investment/investment-choices/currency-linked-deposit/index.shtml" target="_blank" name="35">35</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/tc/personal/investment/investment-choices/currency-linked-deposit/index.shtml</span>
+                                        <div>http://www.chbank.com/tc/personal/investment/investment-choices/currency-linked-deposit/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>「自由息」外幣掛鈎存款</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/tc/personal/banking-services/loans/mortgage-loan/mortgage-loan-calculator/index.shtml" target="_blank">http://www.chbank.com/tc/personal/banking-services/loans/mortgage-loan/mortgage-loan-calculator/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#35" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/en/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml" target="_blank" name="36">36</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/en/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</span>
+                                        <div>http://www.chbank.com/en/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>Year Round Merchant Offers</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/en/personal/banking-services/card/credit-cards/personal-credit-cards/chong-hing-unionpay-dual-currency/index.shtml" target="_blank">http://www.chbank.com/en/personal/banking-services/card/credit-cards/personal-credit-cards/chong-hing-unionpay-dual-currency/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#36" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/en/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml" target="_blank" name="37">37</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/en/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</span>
+                                        <div>http://www.chbank.com/en/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>Year Round Merchant Offers</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/en/personal/banking-services/card/credit-cards/personal-credit-cards/chong-hing-credit-card/chong-hing-unionpay-dual-currency/index.shtml" target="_blank">http://www.chbank.com/en/personal/banking-services/card/credit-cards/personal-credit-cards/chong-hing-credit-card/chong-hing-unionpay-dual-currency/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#37" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/en/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml" target="_blank" name="38">38</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/en/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</span>
+                                        <div>http://www.chbank.com/en/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>Year Round Merchant Offers</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/en/personal/banking-services/card/credit-cards/personal-credit-cards/chong-hing-credit-card/chong-hing/index.shtml" target="_blank">http://www.chbank.com/en/personal/banking-services/card/credit-cards/personal-credit-cards/chong-hing-credit-card/chong-hing/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#38" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/en/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml" target="_blank" name="39">39</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/en/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</span>
+                                        <div>http://www.chbank.com/en/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>Year Round Merchant Offers</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/en/personal/banking-services/card/credit-cards/personal-credit-cards/chong-hing-credit-card/chong-hing-platinum/index.shtml" target="_blank">http://www.chbank.com/en/personal/banking-services/card/credit-cards/personal-credit-cards/chong-hing-credit-card/chong-hing-platinum/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#39" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/en/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml" target="_blank" name="40">40</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/en/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</span>
+                                        <div>http://www.chbank.com/en/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>Year Round Merchant Offers</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/en/personal/banking-services/card/credit-cards/personal-credit-cards/chong-hing-credit-card/man/index.shtml" target="_blank">http://www.chbank.com/en/personal/banking-services/card/credit-cards/personal-credit-cards/chong-hing-credit-card/man/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#40" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/en/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml" target="_blank" name="41">41</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/en/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</span>
+                                        <div>http://www.chbank.com/en/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>Year Round Merchant Offers</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/en/personal/banking-services/card/credit-cards/personal-credit-cards/co-branded-credit-card/chicco/index.shtml" target="_blank">http://www.chbank.com/en/personal/banking-services/card/credit-cards/personal-credit-cards/co-branded-credit-card/chicco/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#41" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/en/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml" target="_blank" name="42">42</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/en/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</span>
+                                        <div>http://www.chbank.com/en/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>Year Round Merchant Offers</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/en/personal/banking-services/card/credit-cards/personal-credit-cards/co-branded-credit-card/kingcomics/index.shtml" target="_blank">http://www.chbank.com/en/personal/banking-services/card/credit-cards/personal-credit-cards/co-branded-credit-card/kingcomics/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#42" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/en/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml" target="_blank" name="43">43</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/en/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</span>
+                                        <div>http://www.chbank.com/en/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>Year Round Merchant Offers</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/en/personal/banking-services/card/credit-cards/personal-credit-cards/co-branded-credit-card/wah-yan-one-family/index.shtml" target="_blank">http://www.chbank.com/en/personal/banking-services/card/credit-cards/personal-credit-cards/co-branded-credit-card/wah-yan-one-family/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#43" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/en/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml" target="_blank" name="44">44</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/en/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</span>
+                                        <div>http://www.chbank.com/en/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>Year Round Merchant Offers</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/en/personal/banking-services/card/credit-cards/personal-credit-cards/co-branded-credit-card/chiu-chow-chamber/index.shtml" target="_blank">http://www.chbank.com/en/personal/banking-services/card/credit-cards/personal-credit-cards/co-branded-credit-card/chiu-chow-chamber/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#44" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/en/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml" target="_blank" name="45">45</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/en/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</span>
+                                        <div>http://www.chbank.com/en/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>Year Round Merchant Offers</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/en/personal/banking-services/card/credit-cards/personal-credit-cards/co-branded-credit-card/mss-alumnae-association/index.shtml" target="_blank">http://www.chbank.com/en/personal/banking-services/card/credit-cards/personal-credit-cards/co-branded-credit-card/mss-alumnae-association/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#45" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/en/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml" target="_blank" name="46">46</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/en/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</span>
+                                        <div>http://www.chbank.com/en/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>Year Round Merchant Offers</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/en/personal/banking-services/card/credit-cards/personal-credit-cards/co-branded-credit-card/munsang-college-alumni-association/index.shtml" target="_blank">http://www.chbank.com/en/personal/banking-services/card/credit-cards/personal-credit-cards/co-branded-credit-card/munsang-college-alumni-association/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#46" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/en/personal/wealth-management/investment-choices/index.shtml" target="_blank" name="47">47</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/en/personal/wealth-management/investment-choices/index.shtml</span>
+                                        <div>http://www.chbank.com/en/personal/wealth-management/investment-choices/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>Investment Choices</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/en/personal/wealth-management/investment-choices/currency-linked-deposit/terms-and-conditions/index.shtml" target="_blank">http://www.chbank.com/en/personal/wealth-management/investment-choices/currency-linked-deposit/terms-and-conditions/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#47" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/en/personal/investment/life-insurance/medical-insurance-plans/index.shtml" target="_blank" name="48">48</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/en/personal/investment/life-insurance/medical-insurance-plans/index.shtml</span>
+                                        <div>http://www.chbank.com/en/personal/investment/life-insurance/medical-insurance-plans/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>General Insurance 5</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/en/personal/wealth-management/general-insurance/index.shtml" target="_blank">http://www.chbank.com/en/personal/wealth-management/general-insurance/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#48" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/en/personal/investment/life-insurance/promotions/index.shtml" target="_blank" name="49">49</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/en/personal/investment/life-insurance/promotions/index.shtml</span>
+                                        <div>http://www.chbank.com/en/personal/investment/life-insurance/promotions/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>General Insurance 6</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/en/personal/wealth-management/general-insurance/index.shtml" target="_blank">http://www.chbank.com/en/personal/wealth-management/general-insurance/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#49" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/en/about-ch-bank/service-network/trade-finance-service-centres/index.shtml" target="_blank" name="50">50</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/en/about-ch-bank/service-network/trade-finance-service-centres/index.shtml</span>
+                                        <div>http://www.chbank.com/en/about-ch-bank/service-network/trade-finance-service-centres/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>here</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/en/personal/footer/about-ch-bank/corporate-news/news-releases/news_20120501.shtml" target="_blank">http://www.chbank.com/en/personal/footer/about-ch-bank/corporate-news/news-releases/news_20120501.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#50" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/onlineapplication/forms/anon/org/app/87cbe5b9-d2fb-40ca-8c9a-f197fe81428a/launch/index.html?form=F_Enquiry?card=UnionPayDual&amp;nl=zh" target="_blank" name="51">51</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/onlineapplication/forms/anon/org/app/87cbe5b9-d2fb-40ca-8c9a-f197fe81428a/launch/index.html?form=F_Enquiry?card=UnionPayDual&amp;nl=zh</span>
+                                        <div>http://www.chbank.com/onlineapplication/forms/anon/org/app/87cbe5b9-d2fb-40ca-8c9a-f197fe81428a/launch/index.html?form=F_Enquiry?card=UnionPayDual&amp;nl=zh</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>立即申请</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/sc/personal/banking-services/card/credit-cards/personal-credit-cards/chong-hing-unionpay-dual-currency/index.shtml" target="_blank">http://www.chbank.com/sc/personal/banking-services/card/credit-cards/personal-credit-cards/chong-hing-unionpay-dual-currency/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#51" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/sc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml" target="_blank" name="52">52</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/sc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</span>
+                                        <div>http://www.chbank.com/sc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>「好啱使」全年商户消费优惠</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/sc/personal/banking-services/card/credit-cards/personal-credit-cards/chong-hing-unionpay-dual-currency/index.shtml" target="_blank">http://www.chbank.com/sc/personal/banking-services/card/credit-cards/personal-credit-cards/chong-hing-unionpay-dual-currency/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#52" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/onlineapplication/forms/anon/org/app/87cbe5b9-d2fb-40ca-8c9a-f197fe81428a/launch/index.html?form=F_Enquiry?card=UnionPayDual&amp;nl=zh" target="_blank" name="53">53</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/onlineapplication/forms/anon/org/app/87cbe5b9-d2fb-40ca-8c9a-f197fe81428a/launch/index.html?form=F_Enquiry?card=UnionPayDual&amp;nl=zh</span>
+                                        <div>http://www.chbank.com/onlineapplication/forms/anon/org/app/87cbe5b9-d2fb-40ca-8c9a-f197fe81428a/launch/index.html?form=F_Enquiry?card=UnionPayDual&amp;nl=zh</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>网上申请</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/sc/personal/banking-services/card/credit-cards/personal-credit-cards/chong-hing-unionpay-dual-currency/index.shtml" target="_blank">http://www.chbank.com/sc/personal/banking-services/card/credit-cards/personal-credit-cards/chong-hing-unionpay-dual-currency/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#53" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/onlineapplication/forms/anon/org/app/87cbe5b9-d2fb-40ca-8c9a-f197fe81428a/launch/index.html?form=F_Enquiry?card=UnionPayDual&amp;nl=zh" target="_blank" name="54">54</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/onlineapplication/forms/anon/org/app/87cbe5b9-d2fb-40ca-8c9a-f197fe81428a/launch/index.html?form=F_Enquiry?card=UnionPayDual&amp;nl=zh</span>
+                                        <div>http://www.chbank.com/onlineapplication/forms/anon/org/app/87cbe5b9-d2fb-40ca-8c9a-f197fe81428a/launch/index.html?form=F_Enquiry?card=UnionPayDual&amp;nl=zh</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>网上申请</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/sc/personal/banking-services/card/credit-cards/personal-credit-cards/chong-hing-credit-card/chong-hing-unionpay-dual-currency/index.shtml" target="_blank">http://www.chbank.com/sc/personal/banking-services/card/credit-cards/personal-credit-cards/chong-hing-credit-card/chong-hing-unionpay-dual-currency/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#54" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/sc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml" target="_blank" name="55">55</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/sc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</span>
+                                        <div>http://www.chbank.com/sc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>「好啱使」全年商户消费优惠</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/sc/personal/banking-services/card/credit-cards/personal-credit-cards/chong-hing-credit-card/chong-hing-unionpay-dual-currency/index.shtml" target="_blank">http://www.chbank.com/sc/personal/banking-services/card/credit-cards/personal-credit-cards/chong-hing-credit-card/chong-hing-unionpay-dual-currency/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#55" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/onlineapplication/forms/anon/org/app/87cbe5b9-d2fb-40ca-8c9a-f197fe81428a/launch/index.html?form=F_Enquiry?card=UnionPayDual&amp;nl=zh" target="_blank" name="56">56</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/onlineapplication/forms/anon/org/app/87cbe5b9-d2fb-40ca-8c9a-f197fe81428a/launch/index.html?form=F_Enquiry?card=UnionPayDual&amp;nl=zh</span>
+                                        <div>http://www.chbank.com/onlineapplication/forms/anon/org/app/87cbe5b9-d2fb-40ca-8c9a-f197fe81428a/launch/index.html?form=F_Enquiry?card=UnionPayDual&amp;nl=zh</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>网上申请</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/sc/personal/banking-services/card/credit-cards/personal-credit-cards/chong-hing-credit-card/chong-hing-unionpay-dual-currency/index.shtml" target="_blank">http://www.chbank.com/sc/personal/banking-services/card/credit-cards/personal-credit-cards/chong-hing-credit-card/chong-hing-unionpay-dual-currency/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#56" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/sc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml" target="_blank" name="57">57</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/sc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</span>
+                                        <div>http://www.chbank.com/sc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>「好啱使」全年商户消费优惠</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/sc/personal/banking-services/card/credit-cards/personal-credit-cards/chong-hing-credit-card/chong-hing/index.shtml" target="_blank">http://www.chbank.com/sc/personal/banking-services/card/credit-cards/personal-credit-cards/chong-hing-credit-card/chong-hing/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#57" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/sc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml" target="_blank" name="58">58</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/sc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</span>
+                                        <div>http://www.chbank.com/sc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>「好啱使」全年商户消费优惠</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/sc/personal/banking-services/card/credit-cards/personal-credit-cards/chong-hing-credit-card/chong-hing-platinum/index.shtml" target="_blank">http://www.chbank.com/sc/personal/banking-services/card/credit-cards/personal-credit-cards/chong-hing-credit-card/chong-hing-platinum/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#58" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/sc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml" target="_blank" name="59">59</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/sc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</span>
+                                        <div>http://www.chbank.com/sc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>「好啱使」全年商户消费优惠</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/sc/personal/banking-services/card/credit-cards/personal-credit-cards/chong-hing-credit-card/man/index.shtml" target="_blank">http://www.chbank.com/sc/personal/banking-services/card/credit-cards/personal-credit-cards/chong-hing-credit-card/man/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#59" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/sc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml" target="_blank" name="60">60</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/sc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</span>
+                                        <div>http://www.chbank.com/sc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>「好啱使」全年商户消费优惠</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/sc/personal/banking-services/card/credit-cards/personal-credit-cards/co-branded-credit-card/chicco/index.shtml" target="_blank">http://www.chbank.com/sc/personal/banking-services/card/credit-cards/personal-credit-cards/co-branded-credit-card/chicco/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#60" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/sc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml" target="_blank" name="61">61</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/sc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</span>
+                                        <div>http://www.chbank.com/sc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>「好啱使」全年商户消费优惠</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/sc/personal/banking-services/card/credit-cards/personal-credit-cards/co-branded-credit-card/kingcomics/index.shtml" target="_blank">http://www.chbank.com/sc/personal/banking-services/card/credit-cards/personal-credit-cards/co-branded-credit-card/kingcomics/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#61" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/sc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml" target="_blank" name="62">62</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/sc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</span>
+                                        <div>http://www.chbank.com/sc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>「好啱使」全年商户消费优惠</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/sc/personal/banking-services/card/credit-cards/personal-credit-cards/co-branded-credit-card/wah-yan-one-family/index.shtml" target="_blank">http://www.chbank.com/sc/personal/banking-services/card/credit-cards/personal-credit-cards/co-branded-credit-card/wah-yan-one-family/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#62" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/sc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml" target="_blank" name="63">63</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/sc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</span>
+                                        <div>http://www.chbank.com/sc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>「好啱使」全年商户消费优惠</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/sc/personal/banking-services/card/credit-cards/personal-credit-cards/co-branded-credit-card/chiu-chow-chamber/index.shtml" target="_blank">http://www.chbank.com/sc/personal/banking-services/card/credit-cards/personal-credit-cards/co-branded-credit-card/chiu-chow-chamber/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#63" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/onlineapplication/forms/anon/org/app/87cbe5b9-d2fb-40ca-8c9a-f197fe81428a/launch/index.html?form=F_Enquiry?card=HKCCCC&amp;nl=zh" target="_blank" name="64">64</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/onlineapplication/forms/anon/org/app/87cbe5b9-d2fb-40ca-8c9a-f197fe81428a/launch/index.html?form=F_Enquiry?card=HKCCCC&amp;nl=zh</span>
+                                        <div>http://www.chbank.com/onlineapplication/forms/anon/org/app/87cbe5b9-d2fb-40ca-8c9a-f197fe81428a/launch/index.html?form=F_Enquiry?card=HKCCCC&amp;nl=zh</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>网上申请</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/sc/personal/banking-services/card/credit-cards/personal-credit-cards/co-branded-credit-card/chiu-chow-chamber/index.shtml" target="_blank">http://www.chbank.com/sc/personal/banking-services/card/credit-cards/personal-credit-cards/co-branded-credit-card/chiu-chow-chamber/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#64" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/sc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml" target="_blank" name="65">65</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/sc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</span>
+                                        <div>http://www.chbank.com/sc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>「好啱使」全年商户消费优惠</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/sc/personal/banking-services/card/credit-cards/personal-credit-cards/co-branded-credit-card/mss-alumnae-association/index.shtml" target="_blank">http://www.chbank.com/sc/personal/banking-services/card/credit-cards/personal-credit-cards/co-branded-credit-card/mss-alumnae-association/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#65" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/sc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml" target="_blank" name="66">66</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/sc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</span>
+                                        <div>http://www.chbank.com/sc/personal/banking-services/card/credit-cards/credit-cards-benefits/year-round-merchant-offers-2019/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>「好啱使」全年商户消费优惠</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/sc/personal/banking-services/card/credit-cards/personal-credit-cards/co-branded-credit-card/munsang-college-alumni-association/index.shtml" target="_blank">http://www.chbank.com/sc/personal/banking-services/card/credit-cards/personal-credit-cards/co-branded-credit-card/munsang-college-alumni-association/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#66" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/sc/personal/investment/investment-choices/investment-funds-services/index.shtml" target="_blank" name="67">67</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/sc/personal/investment/investment-choices/investment-funds-services/index.shtml</span>
+                                        <div>http://www.chbank.com/sc/personal/investment/investment-choices/investment-funds-services/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>基金投资服务</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/sc/personal/banking-services/loans/consumer-loan/tax-loan-calculator/index.shtml" target="_blank">http://www.chbank.com/sc/personal/banking-services/loans/consumer-loan/tax-loan-calculator/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#67" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/ibanking/theLink/sc/fund_wb.html" target="_blank" name="68">68</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/ibanking/theLink/sc/fund_wb.html</span>
+                                        <div>http://www.chbank.com/ibanking/theLink/sc/fund_wb.html</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>基金搜寻</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/sc/personal/banking-services/loans/consumer-loan/tax-loan-calculator/index.shtml" target="_blank">http://www.chbank.com/sc/personal/banking-services/loans/consumer-loan/tax-loan-calculator/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#68" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/sc/personal/investment/investment-choices/currency-linked-deposit/index.shtml" target="_blank" name="69">69</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/sc/personal/investment/investment-choices/currency-linked-deposit/index.shtml</span>
+                                        <div>http://www.chbank.com/sc/personal/investment/investment-choices/currency-linked-deposit/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>「自由息」外币挂鈎存款</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/sc/personal/banking-services/loans/consumer-loan/tax-loan-calculator/index.shtml" target="_blank">http://www.chbank.com/sc/personal/banking-services/loans/consumer-loan/tax-loan-calculator/index.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#69" onclick="explain();">404 </a></td>
+                            </tr>
+                            <tr>
+                                <td id="brokenLinkTable_td" align="center"><a href="http://www.chbank.com/en/commercial/service-channels/phone-app/soft-token-faq/index.shtml" target="_blank" name="70">70</a></td>
+                                <td id="brokenLinkTable_td">
+                                    <div class="tooltip"><span class="tooltiptext">http://www.chbank.com/en/commercial/service-channels/phone-app/soft-token-faq/index.shtml</span>
+                                        <div>http://www.chbank.com/en/commercial/service-channels/phone-app/soft-token-faq/index.shtml</div>
+                                    </div>
+                                </td>
+                                <td id="brokenLinkTable_td">
+                                    <div>FAQ</div>
+                                </td>
+                                <td id="brokenLinkTable_td" align="null"><a href="http://www.chbank.com/en/personal/digital-services/internet-banking/faq/two-factor-authentication.shtml" target="_blank">http://www.chbank.com/en/personal/digital-services/internet-banking/faq/two-factor-authentication.shtml</a>
+                                    <blink></blink>
+                                </td>
+                                <td id="brokenLinkTable_td_right_end" align="center"><a href="#70" onclick="explain();">404 </a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </td>
+
+        </tr>
+
+        
+      
+
+        
+
+    </tbody>
+</table>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script src="https://ssl.google-analytics.com/ga.js" type="text/javascript"></script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-5501764-2");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+ 
+<script type="text/javascript">
+if (/Firefox[\/\s](\d+\.\d+)/.test(navigator.userAgent)){ 
+  document.getElementById("txt1").cols=46;
+}
+</script>
+<script type="text/javascript">
+  /*var listofurl = document.getElementsByClassName("URLtext");
+  var temp = "";
+  var ourCount = 0;
+  var tcCount = 0;
+  var scCount = 0;
+  var enCount = 0;
+  for(var i=0;i<listofurl.length;i++){
+    temp = listofurl[i].innerHTML;
+    if(listofurl[i].innerHTML.indexOf("/sc/")>=0){
+      listofurl[i].innerHTML = temp.split("/sc/").join("/<span style='background-color: yellow'>sc</span>/");
+      scCount++;
+    }
+    else if(listofurl[i].innerHTML.indexOf("/tc/")>=0){
+      listofurl[i].innerHTML = temp.split("/tc/").join("/<span style='background-color: blue; color:white'>tc</span>/");
+      tcCount++;
+    }
+    else if(listofurl[i].innerHTML.indexOf("/en/")>=0){
+      listofurl[i].innerHTML = temp.split("/en/").join("/<span style='background-color: #5eff36'>en</span>/");
+      enCount++;
+    }
+    if(listofurl[i].innerHTML.indexOf("digital-services")>=0){
+      listofurl[i].parentElement.parentElement.style.backgroundColor="#ffc078";
+      listofurl[i].innerHTML = temp.split("digital-services").join("<span style='background-color: #ff8800'>digital-services</span>");
+      ourCount++;
+    }
+    if(listofurl[i].innerHTML.indexOf("security")>=0){
+      listofurl[i].parentElement.parentElement.style.backgroundColor="#ffc078";
+      listofurl[i].innerHTML = temp.split("security").join("<span style='background-color: #ff8800'>security</span>");
+      ourCount++;
+
+    }
+    if(listofurl[i].innerHTML.indexOf("itunes.apple")>=0){
+      listofurl[i].parentElement.parentElement.style.backgroundColor="#ffc078";
+      listofurl[i].innerHTML = temp.split("itunes.apple").join("<span style='background-color: #ff8800'>itunes.apple</span>");
+      ourCount++;
+    }
+    if(listofurl[i].innerHTML.indexOf("play.google")>=0){
+      listofurl[i].parentElement.parentElement.style.backgroundColor="#ffc078";
+      listofurl[i].innerHTML = temp.split("play.google").join("<span style='background-color: #ff8800'>play.google</span>");
+      ourCount++;
+    }
+    if(listofurl[i].innerHTML.indexOf("gov")>=0){
+      listofurl[i].parentElement.parentElement.style.backgroundColor="#abffaf";
+    }
+    if(listofurl[i].innerHTML.indexOf("uat")>=0){
+      listofurl[i].parentElement.parentElement.style.backgroundColor="#ff776e";
+    }
+
+    temp = "";
+  }
+
+  function statsButton(){
+    alert("There are ( "+ourCount+" ) entry that we can handle by ourselves"+"\n"+"There are ( "+tcCount+" ) entry that is Chinese Traditional"
+      +"\n"+"There are ( "+scCount+" ) entry that is Chinese Simplified"
+      +"\n"+"There are ( "+enCount+" ) entry that is English");
+  }
+  var floatingMaskBottom = document.createElement("DIV");
+  floatingMaskBottom.id = "bottom";
+  floatingMaskBottom.style.position = "absolute";
+  floatingMaskBottom.style.backgroundColor = "black";
+  document.body.appendChild(floatingMaskBottom);
+
+  var floatingMaskTop = document.createElement("DIV");
+  floatingMaskTop.style.position = "absolute";
+  floatingMaskTop.style.backgroundColor = "black";
+  document.body.appendChild(floatingMaskTop);
+
+  var floatingMaskLeft = document.createElement("DIV");
+  floatingMaskLeft.style.position = "absolute";
+  floatingMaskLeft.style.backgroundColor = "black";
+  document.body.appendChild(floatingMaskLeft);
+
+  var floatingMaskRight = document.createElement("DIV");
+  floatingMaskRight.style.position = "absolute";
+  floatingMaskRight.style.backgroundColor = "black";
+  document.body.appendChild(floatingMaskRight);
+
+
+  document.addEventListener('click', function(e) {
+    e = e || window.event;
+    var target = e.target || e.srcElement;
+    var text = target.textContent || target.innerText;
+    if(target.parentElement.parentElement.nodeName == "TR"){
+      
+      floatingMaskBottom.style.width = target.parentElement.parentElement.offsetWidth;
+      floatingMaskBottom.style.height = "3px";
+      floatingMaskBottom.style.left = target.parentElement.parentElement.offsetLeft + window.innerWidth*0.1 + 5;
+      floatingMaskBottom.style.top = target.parentElement.parentElement.offsetTop + target.parentElement.parentElement.offsetHeight + 7;
+
+      floatingMaskTop.style.width = target.parentElement.parentElement.offsetWidth;
+      floatingMaskTop.style.height = "3px";
+      floatingMaskTop.style.left = target.parentElement.parentElement.offsetLeft + window.innerWidth*0.1 + 5;;
+      floatingMaskTop.style.top = target.parentElement.parentElement.offsetTop + 7;
+
+      floatingMaskLeft.style.width = "3px";
+      floatingMaskLeft.style.height = target.parentElement.parentElement.offsetHeight;
+      floatingMaskLeft.style.left = target.parentElement.parentElement.offsetLeft + window.innerWidth*0.1 + 5;;
+      floatingMaskLeft.style.top = target.parentElement.parentElement.offsetTop + 7;
+
+      floatingMaskRight.style.width = "3px";
+      floatingMaskRight.style.height = target.parentElement.parentElement.offsetHeight;
+      floatingMaskRight.style.left = target.parentElement.parentElement.offsetLeft + target.parentElement.parentElement.offsetWidth + window.innerWidth*0.1 + 5;;
+      floatingMaskRight.style.top = target.parentElement.parentElement.offsetTop + 7;
+    }
+    else if(target.parentElement.nodeName == "TR"){
+      
+      floatingMaskBottom.style.width = target.parentElement.offsetWidth;
+      floatingMaskBottom.style.height = "3px";
+      floatingMaskBottom.style.left = target.parentElement.offsetLeft + window.innerWidth*0.1 + 5;;
+      floatingMaskBottom.style.top = target.parentElement.offsetTop + target.parentElement.offsetHeight + 7;
+
+      floatingMaskTop.style.width = target.parentElement.offsetWidth;
+      floatingMaskTop.style.height = "3px";
+      floatingMaskTop.style.left = target.parentElement.offsetLeft + window.innerWidth*0.1 + 5;;
+      floatingMaskTop.style.top = target.parentElement.offsetTop + 7;
+
+      floatingMaskLeft.style.width = "3px";
+      floatingMaskLeft.style.height = target.parentElement.offsetHeight;
+      floatingMaskLeft.style.left = target.parentElement.offsetLeft + window.innerWidth*0.1 + 5;;
+      floatingMaskLeft.style.top = target.parentElement.offsetTop + 7;
+
+      floatingMaskRight.style.width = "3px";
+      floatingMaskRight.style.height = target.parentElement.offsetHeight;
+      floatingMaskRight.style.left = target.parentElement.offsetLeft + target.parentElement.offsetWidth + window.innerWidth*0.1 + 5;;
+      floatingMaskRight.style.top = target.parentElement.offsetTop + 7;
+    }
+  }, false);*/
+</script>
+</body>
+</html>
